@@ -35,13 +35,14 @@
 
 ```bash
 # 0. Один раз: бэкапы и копия приложения
-cp "/Applications/Yandex Music.app/Contents/Resources/app.asar" ~/app.asar.yandex-music.orig
-cp "/Applications/Yandex Music.app/Contents/Info.plist" ~/Info.plist.yandex-music.orig
+mkdir -p backup
+cp "/Applications/Yandex Music.app/Contents/Resources/app.asar" backup/app.asar.orig
+cp "/Applications/Yandex Music.app/Contents/Info.plist" backup/Info.plist.orig
 cp -R "/Applications/Yandex Music.app" ~/Applications/
 
 # 1. Распаковать
 cd tools && npm install && cd ..
-npx --prefix tools @electron/asar extract ~/app.asar.yandex-music.orig work/
+npx --prefix tools @electron/asar extract backup/app.asar.orig work/
 
 # 2. Положить изменённые файлы поверх (или патчить вручную)
 cp -R patched/* work/
