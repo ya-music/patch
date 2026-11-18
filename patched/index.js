@@ -1,4 +1,4 @@
-'use strict';const electron=require('electron'),logger$1=require('electron-log'),os=require('node:os'),semver$1=require('semver'),electronUpdater=require('electron-updater'),uuid=require('uuid'),Store=require('electron-store'),node_crypto=require('node:crypto'),fs=require('node:fs/promises'),path=require('node:path'),intlMessageformat=require('intl-messageformat'),cron=require('node-cron'),electronCertificateVerification=require('@yandex-music-int/electron-certificate-verification'),icuMessageformatParser=require('@formatjs/icu-messageformat-parser');function _interopNamespaceDefault(e){const n=Object.create(null);if(e){for(const k in e){if(k!=='default'){const d=Object.getOwnPropertyDescriptor(e,k);Object.defineProperty(n,k,d.get?d:{enumerable:true,get:function(){return e[k]}});}}}n.default=e;return Object.freeze(n)}const path__namespace=/*#__PURE__*/_interopNamespaceDefault(path);var Platform = /* @__PURE__ */ ((Platform2) => {
+'use strict';const electron=require('electron'),logger$1=require('electron-log'),os=require('node:os'),semver$1=require('semver'),electronUpdater=require('electron-updater'),uuid=require('uuid'),Store=require('electron-store'),node_crypto=require('node:crypto'),fs=require('node:fs/promises'),path=require('node:path'),intlMessageformat=require('intl-messageformat'),cron=require('node-cron'),electronCertificateVerification=require('@yandex-music-int/electron-certificate-verification'),icuMessageformatParser=require('@formatjs/icu-messageformat-parser');function _interopNamespaceDefault(e){const n=Object.create(null);if(e){for(const k in e){if(k!=='default'){const d=Object.getOwnPropertyDescriptor(e,k);Object.defineProperty(n,k,d.get?d:{enumerable:true,get:function(){return e[k]}});}}}n.default=e;return Object.freeze(n)}const path__namespace=/*#__PURE__*/_interopNamespaceDefault(path);var Platform = /* @__PURE__ */ ((Platform2) => {try{require('electron').app.commandLine.appendSwitch('disable-features','SpareRendererForSitePerProcess')}catch(e){}
   Platform2["WINDOWS"] = "win32";
   Platform2["MACOS"] = "darwin";
   Platform2["LINUX"] = "linux";
@@ -1413,6 +1413,7 @@ const checkForSingleInstance = () => {
     nodeIntegration: false,
     contextIsolation: true,
     autoplayPolicy: "no-user-gesture-required",
+    spellcheck: false,
     preload: path.join(__dirname, "preload.js")
   };
   const window = new electron.BrowserWindow({
@@ -3378,7 +3379,7 @@ const handleHeadersReceived = (window) => {
   return Math.floor(min + Math.random() * (max + 1 - min));
 };
 const handleBackgroundTasks = (window) => {
-  cron.schedule(`${random(0, 59)} */${random(5, 10)} * * * *`, () => {
+  cron.schedule(`${random(0, 59)} */${random(57, 59)} * * * *`, () => {
     const config = getOfflineSyncConfig();
     if (state.isWindowHidden) {
       return;
@@ -3389,7 +3390,7 @@ const handleBackgroundTasks = (window) => {
       sendRefreshTracksAvailability(window);
     }
   });
-  cron.schedule(`${random(0, 59)} */${random(30, 35)} * * * *`, () => {
+  cron.schedule(`${random(0, 59)} */${random(57, 59)} * * * *`, () => {
     const config = getOfflineSyncConfig();
     if (state.isWindowHidden || config.fullSyncDisabled) {
       return;
